@@ -1,0 +1,95 @@
+## PCA###
+
+##instalar ggplot2##
+install.packages("ggplot2")
+library('ggplot2')
+
+## correlación ##
+install.packages("corrr")
+library('corrr')
+
+## Matriz de correlación##
+install.packages("ggcorrplot")
+library(ggcorrplot)
+
+##Factor mine R analisis exploratorio de datos multivariados ##
+install.packages("FactoMineR")
+library("FactoMineR")
+
+## Cargar datos usa read.csv() / en este caso solo la base de datos y para verlos se usa str ##
+datoscrot<- mtcars
+str(mtcars)
+
+## para ver que no haya valores faltantes ##
+colSums(is.na(datoscrot))
+
+## Normalizar los datos ##
+##solo datos numericos##
+
+numerical_data=datoscrot[,2:11]
+head(numerical_data)
+
+data_normalized <- scale(numerical_data)
+head(data_normalized)
+
+## Matriz de correlación ##
+corr_matrix <- cor(data_normalized)
+ggcorrplot(corr_matrix)
+##heatmap##
+
+#Dendograma#
+install.packages("pheatmap")
+library(pheatmap
+pheatmap(corr_matrix)
+
+
+## PCA ##
+
+## princomp() calcula PCA, summary() muestra el resultado ##
+data.pca <- princomp(corr_matrix)
+summary(data.pca)
+
+
+## visualización de componentes principales#
+###Para la importancia de cada componente ##
+
+install.packages("devtools")
+library("devtools")
+install_github("kassambara/factoextra")
+install.packages("factoextra")
+library("factoextra")
+
+## El scree plot para visualizar la importancia de cada componente principal/determinar el numero de componentes principales a retener, se puede generar usando fviz_eig() ##
+fviz_eig(data.pca, addlabels = TRUE)
+
+#Nombre#
+screeplot<-fviz_eig(data.pca, addlabels = TRUE)
+
+## Graficar las variables / otener el biplot#
+fviz_pca_var(data.pca, col.var = "black")
+#Nombre#
+biplot<-fviz_pca_var(data.pca, col.var = "black")
+
+#correlationplot#
+install.packages("PerformanceAnalytics")
+library(PerformanceAnalytics)
+chart.Correlation(numerical_data, histogram = TRUE, method = "pearson")
+
+## Representacion de las variables ##
+fviz_cos2(data.pca, choice = "var", axes = 1:2)
+
+#Nombre#
+cos2<-fviz_cos2(data.pca, choice = "var", axes = 1:2)
+
+##Biplot combinado con cos2 ##
+fviz_pca_var(data.pca, col.var = "cos2",
+            gradient.cols = c("black", "orange", "green"),
+            repel = TRUE)
+#Nombre##
+biplotycos2<-fviz_pca_var(data.pca, col.var = "cos2",
+            gradient.cols = c("black", "orange", "green"),
+            repel = TRUE)
+
+##### FINNNNN ######
+
+

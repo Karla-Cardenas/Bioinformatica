@@ -1,0 +1,22 @@
+### ANOVA ###
+## cargar base de datos ##
+data=mtcars
+head(mtcars)
+
+## limpiar y transformar datos (si es necesario) ##
+any(is.na(mtcars))
+[1] FALSE  ##sale eso##
+
+## ver los datos/estructura ##
+str(mtcars)
+summary(mtcars)
+
+## Hacer el ANOVA ##
+
+anova_model<-aov(mpg~cyl, data = mtcars)
+summary(anova_model)
+
+## Visualiza los datos / ponles colorrr##
+boxplot(mpg~cyl,data = mtcars, col= c("lightpink", "lightyellow", "lightblue"), main= "ANOVA Boxplot")
+
+#### FINNNN ####
